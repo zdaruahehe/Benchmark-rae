@@ -93,6 +93,6 @@ RAE
 * All evaluation scripts are in "RAE" folder,
 * Model Evaluation for images generation are found in calculate_fid.py,
 * To run evaluation script calculate_FID.py, please specify two pathes of destination folders which both contain images, and a parameter "--gpu": none for cpu, a number for gpu such as "--gpu 0"
-* that is enter "python calculate_FID.py path1 path2 --gpu 0"
+* that is enter "python calculate_FID.py 'path1' 'path2' --gpu 0"
 * Due to file size limitation, some of the files like inception_v3_google-0cc3c7bd.pth are uploaded on the google drive: https://drive.google.com/drive/folders/1J2onGDemUzY0jZ3kD4JGXH6voUvAip4N?usp=sharing
 
