@@ -4,10 +4,10 @@
 #### Written by Yuhan Xie
 
 ## Setting Up
-The code was written under the following setup:
-* Using this version of Anaconda: https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh, followed by
-* pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
-* pip install opencv-python
+The code is under the following setup:
+* Using this version of Anaconda: https://repo.anaconda.com/archive/Anaconda3-2020.11-Linux-x86_64.sh, 
+* and whole environment setup is in environment.yaml called rae
+* to setup environment, please use "conda env create -f environment.yaml" and enter "conda activate rae" in anaconda command prompt.
 
 ## Folder structure
 The msc_edinburgh_thesis_material_submission folder contains One folder:
@@ -17,50 +17,80 @@ The msc_edinburgh_thesis_material_submission folder contains One folder:
 ```
 RAE
  |____ data
- |  |___ cifar-10-batches-py
- |  |
- |  |___ FashionMNIST     
- |  |            
- |  |___ mnist
-		|
-    |____my_dataset.py
+        |___ cifar-10-batches-py
+        |
+        |___ FashionMNIST     
+        |            
+        |___ mnist
+        |
+        |____my_dataset.py
 		  
 
 ```
 Due to file size limitation, all other data are found in the google drive link: https://drive.google.com/drive/folders/1J2onGDemUzY0jZ3kD4JGXH6voUvAip4N?usp=sharing
 
-#### To navigate around the scripts_and_model_related_files folder structure
+#### To navigate around the trained result folder structure, folder "train_result" is for generated images, and folder "trained_models" is for trained models checkpoint.
 ```
-msc_edinburgh_thesis_material_submission
-    |____ scripts_and_model_related_files 
-            |___ scripts
-            |     
-            |            
-            |___  model_files
-		  |___cars_models__ .pth model files for cars dataset
-		  |
-		  |___finance models__ .pth model files for implied volatility surface data
-		  |
-		  |___csv files__ .pth model files for fashion MNIST dataset
+RAE
+ |____ train_result 
+            |___ generated_images_for_model1
+            |      |___reconstructed
+            |      |___samples
+            |
+            |___ generated_images_for_model2
+            |      |___reconstructed
+            |      |___samples
+            |___ ...(generated images for diffenret models)
+            |   
+            |___ GMM_images
+		   |___GMM_images_for_model1
+                   |___...(GMM samples for different trained models)
 
 ```
-#### Training Models
-* Found scripts_and_model_related_files
-* Model training scripts are named starting with the model name followed by the data set or domain
-* For Fashion MNIST, the scripts for training are: RAE_fmnist_final.py, vae_fmnist.py, WAE_fmnist.py
-* For Cars, the scripts for training are: rae_stanford_cars_final.py, rae_stanford_cars_spectral_norm.py, vae_stanford_cars.py, wae_stanford_cars.py
-* For implied volatility surface, the scripts are: RAE_Finance.py, VAE_Finance.py, WAE_Finance.py
-* Note that the scripts depend upon the losses.py which contains user defined classes for the different models and spectral_norm_layers.py for SN
-* Cars models depends upon cars_data_gen.py and cars_preprocess.py.
 
+```
+RAE
+ |____ trained_models 
+            |___ trained_model1
+            |
+            |___ trained_model2
+            |
+            |___ ...
 
-#### Model Evaluation
-* Found scripts_and_model_related_files
-* Model Evaluation for images are found in compute_fid.py which depends on fid.py, model_repo.py and inception.py 
-  as well as the pretrained model file pt_inception-2015-12-05-6726825d.pth. Cars models depends upon cars_data_gen.py and cars_preprocess.py.
-* Model evaluation for finance dataset are mae_eval_complete_vol_surface.py, test_recon_mae_and_gridbased_completion.py and finance_gen_check.py
-* Due to file size limitation, some of the files like pt_inception-2015-12-05-6726825d.pth are uploaded on the google drive: https://drive.google.com/drive/folders/1J2onGDemUzY0jZ3kD4JGXH6voUvAip4N?usp=sharing
+```
 
-#### Trained Model files
-* Found in the respective subfolders in the model_files directory.
-All materials could be found on: https://drive.google.com/drive/folders/1J2onGDemUzY0jZ3kD4JGXH6voUvAip4N?usp=sharing
+Due to file size limitation, all training results are found in the google drive link: https://drive.google.com/drive/folders/1J2onGDemUzY0jZ3kD4JGXH6voUvAip4N?usp=sharing
+
+#### Training 
+* All training scripts are in "RAE" folder,
+* Model training scripts are named starting with the prefix "train" and network name followed by the RAE, VAE or WAE
+* Note that folders "network", "opts" and "utils" are packages depended by training scripts above. Loss functions of different networks are in diffenrent sub-folders named with model name under folder "network".
+* which is
+
+```
+RAE
+ |____ network 
+          |___ rae
+                |___ loss_function
+                |___ ...(model structures)
+          |
+          |___ SN_layers
+                |___ ...(model structures)
+          |
+          |___ vae
+                |___ loss_function
+                |___ ...(model structures)
+          |
+          |___ wae
+                |___ loss_function
+                |___ ...(model structures)
+
+```
+
+####  Evaluation
+* All evaluation scripts are in "RAE" folder,
+* Model Evaluation for images generation are found in calculate_fid.py,
+* To run evaluation script calculate_FID.py, please specify two pathes of destination folders which both contain images, and a parameter "--gpu": none for cpu, a number for gpu such as "--gpu 0"
+* that is enter "python calculate_FID.py path1 path2 --gpu 0"
+* Due to file size limitation, some of the files like inception_v3_google-0cc3c7bd.pth are uploaded on the google drive: https://drive.google.com/drive/folders/1J2onGDemUzY0jZ3kD4JGXH6voUvAip4N?usp=sharing
+
