@@ -10,8 +10,10 @@ The code is under the following setup:
 * to setup environment, please use "conda env create -f environment.yaml" and enter "conda activate rae" in anaconda command prompt.
 
 ## Folder structure
-The msc_edinburgh_thesis_material_submission folder contains One folder:
+The submitted material "myproject.zip" contains One folder:
 * RAE
+* 
+This Github repository displays the specific files directory under the RAE folder
 
 #### To navigate around the data folder structure
 ```
